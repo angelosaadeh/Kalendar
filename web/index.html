@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalendar — tile puzzle</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="kalendar-section">
+  <header class="game-header">
+    <h1 class="game-title">Kalendar</h1>
+    <p class="game-intro">
+      A tile puzzle: place 6 of the 7 pieces on the 7×5 board to cover every cell
+      except today's date. Drag pieces from the tray; rotate &amp; flip with the
+      button on each piece. Every day has many solutions — click
+      <strong>Show Solution</strong> to browse them.
+    </p>
+  </header>
+
+  <div class="controls">
+    <label class="control-group">
+      <span>Target day</span>
+      <select id="day-select"></select>
+    </label>
+    <button class="btn" onclick="resetGame()">Reset</button>
+    <button class="btn primary" id="show-solution-btn" onclick="showSolution()">Show Solution</button>
+    <span id="solution-status" class="solution-status"></span>
+  </div>
+
+  <div id="solution-nav" class="solution-nav">
+    <span class="muted">Showing solution</span>
+    <span id="solution-counter" class="counter">1/1</span>
+    <div class="nav-buttons">
+      <button class="btn" id="prev-sol-btn" onclick="prevSolution()">← Previous</button>
+      <button class="btn" id="next-sol-btn" onclick="nextSolution()">Next →</button>
+      <button class="btn" onclick="hideSolution()">Hide Solution</button>
+    </div>
+  </div>
+
+  <div class="kalendar-layout">
+    <section class="board-sticky">
+      <div class="panel-label">Board</div>
+      <div id="board"></div>
+      <div class="status" id="status"></div>
+    </section>
+
+    <section class="tray-scrollable">
+      <div class="panel-label">Pieces</div>
+      <div id="tray"></div>
+    </section>
+  </div>
+
+  <footer class="page-footer">
+    <a href="https://github.com/angelosaadeh/Kalendar" target="_blank" rel="noopener">Solutions &amp; solver on GitHub ⟶</a>
+  </footer>
+</main>
+
+<canvas id="floating-tile"></canvas>
+
+<script src="solutions.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+/* Kalendar — clean light / paper theme */
+
+:root {
+  --bg:        #faf9f6;
+  --surface:   #ffffff;
+  --grid-bg:   #ffffff;
+  --cell:      #f1efe9;
+  --cell-edge: #e3e0d6;
+  --ink:       #2c2a26;
+  --ink-dim:   #8a857b;
+  --accent:    #c47b5a;
+  --target:    #fff4d6;
+  --target-edge:#e6c66a;
+  --win:       #4f9d69;
+  --shadow:    rgba(60, 55, 45, 0.10);
+  --cell-px:   56px;
+  --gap:       4px;
+  --pad:       12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 32px 24px 64px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  -webkit-font-smoothing: antialiased;
+}
+
+#kalendar-section { max-width: 960px; margin: 0 auto; }
+
+/* ── Header ─────────────────────────────────────────────── */
+.game-title {
+  font-size: 2.4rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 0 0 12px;
+}
+.game-intro {
+  max-width: 600px;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  margin: 0 0 24px;
+}
+.game-intro strong { color: var(--ink); }
+
+/* ── Controls ───────────────────────────────────────────── */
+.controls {
+  display: flex; gap: 12px; align-items: center;
+  flex-wrap: wrap; margin-bottom: 20px;
+}
+.control-group {
+  display: flex; gap: 8px; align-items: center;
+  font-size: 0.75rem; color: var(--ink-dim);
+}
+#day-select {
+  background: var(--surface);
+  border: 1px solid var(--cell-edge);
+  color: var(--ink);
+  font-family: inherit; font-size: 0.8rem;
+  padding: 6px 10px; border-radius: 6px; cursor: pointer; outline: none;
+}
+
+.btn {
+  background: var(--surface);
+  border: 1px solid var(--cell-edge);
+  color: var(--ink);
+  font-family: inherit; font-size: 0.75rem;
+  padding: 7px 14px; border-radius: 6px; cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.05s;
+}
+.btn:hover { border-color: var(--accent); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.4; cursor: default; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { filter: brightness(1.05); }
+
+.solution-status { font-size: 0.7rem; color: var(--accent); }
+
+.solution-nav {
+  display: none; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin-bottom: 18px; padding: 12px 16px;
+  background: var(--surface); border: 1px solid var(--cell-edge);
+  border-radius: 8px;
+}
+.solution-nav .muted { color: var(--ink-dim); font-size: 0.8rem; }
+.solution-nav .counter { color: var(--accent); font-size: 1.1rem; font-weight: 600; }
+.nav-buttons { display: flex; gap: 8px; }
+
+/* ── Layout ─────────────────────────────────────────────── */
+.kalendar-layout {
+  display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;
+}
+.panel-label {
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-dim); margin-bottom: 12px; text-align: center;
+}
+.board-sticky { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.tray-scrollable { flex: 1; min-width: 220px; }
+
+/* ── Board ──────────────────────────────────────────────── */
+#board {
+  display: grid;
+  grid-template-columns: repeat(7, var(--cell-px));
+  grid-template-rows: repeat(5, var(--cell-px));
+  gap: var(--gap);
+  background: var(--grid-bg);
+  padding: var(--pad);
+  border-radius: 12px;
+  border: 1px solid var(--cell-edge);
+  box-shadow: 0 8px 30px var(--shadow);
+  position: relative;
+}
+.cell {
+  display: flex; align-items: center; justify-content: center;
+  background: var(--cell);
+  border: 1px solid var(--cell-edge);
+  border-radius: 6px;
+  font-size: 0.8rem; color: var(--ink-dim);
+  user-select: none;
+}
+.cell.blocked { background: transparent; border-color: transparent; }
+.cell.target {
+  background: var(--target);
+  border-color: var(--target-edge);
+  color: var(--ink); font-weight: 600;
+  box-shadow: 0 0 0 2px var(--target-edge) inset;
+}
+.cell.occupied { color: rgba(0,0,0,0.4); border-color: transparent; }
+.cell.highlight { outline: 2px solid var(--win); outline-offset: -2px; }
+.cell.invalid-highlight { outline: 2px solid #d65a5a; outline-offset: -2px; }
+
+.status { font-size: 0.8rem; color: var(--ink-dim); text-align: center; min-height: 1.2em; }
+.status.win { color: var(--win); font-weight: 600; }
+
+/* ── Tray / pieces ──────────────────────────────────────── */
+#tray {
+  display: flex; flex-direction: column; gap: 16px;
+  background: var(--surface);
+  padding: 16px; border-radius: 12px;
+  border: 1px solid var(--cell-edge);
+  min-height: 200px;
+}
+.tile-slot { display: flex; align-items: center; gap: 16px; }
+.tile-canvas-wrap {
+  cursor: grab; padding: 6px; border-radius: 8px;
+  transition: background 0.15s, opacity 0.15s;
+}
+.tile-canvas-wrap:hover { background: var(--cell); }
+.tile-canvas-wrap.placed { opacity: 0.35; cursor: default; }
+.tile-canvas-wrap.placed:hover { background: transparent; }
+.tile-controls { display: flex; flex-direction: column; gap: 6px; }
+.tile-btn {
+  background: var(--surface); border: 1px solid var(--cell-edge);
+  color: var(--ink-dim); font-family: inherit; font-size: 0.65rem;
+  padding: 4px 8px; border-radius: 5px; cursor: pointer;
+}
+.tile-btn:hover { border-color: var(--accent); color: var(--ink); }
+
+#floating-tile {
+  position: fixed; pointer-events: none; z-index: 1000;
+  opacity: 0.88; display: none;
+  transform: translate(-50%, -50%);
+  transition: left 0.08s ease, top 0.08s ease;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+.page-footer { margin-top: 40px; font-size: 0.75rem; }
+.page-footer a { color: var(--accent); text-decoration: none; }
+.page-footer a:hover { text-decoration: underline; }
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  :root { --cell-px: 48px; }
+  body { padding: 20px 14px 48px; }
+  .kalendar-layout { gap: 24px; }
+}
