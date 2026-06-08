@@ -41,6 +41,10 @@ python scripts/export_web.py     # refresh the data the web game uses
 
 ## Play it
 
+**Online:** 
+Hosted on https://www.angelosaadeh.fr/#kalendar
+
+**Locally:** 
 Open **`web/index.html`** in any browser (no server needed). Drag pieces onto the
 board, rotate/flip them, or pick a day and hit **Show Solution** to browse every
 solution for that date.
